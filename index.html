@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agendamento – Calmidrol</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <span class="topbar-icon">💊</span>
+  <span>Sistema de Agendamento – Calmidrol</span>
+</div>
+
+<div class="container">
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('novo')">＋ Novo pedido</div>
+    <div class="tab" onclick="switchTab('lista')">☰ Pedidos <span id="count-badge" class="badge-count">0</span></div>
+  </div>
+
+  <!-- NOVO PEDIDO -->
+  <div id="sec-novo" class="section active">
+
+    <div class="card">
+      <div class="sec-title">👤 Dados do paciente</div>
+      <div class="form-grid g2">
+        <div class="form-group"><label>Data do agendamento</label><input type="date" id="f-data"></div>
+        <div class="form-group"><label>Nome completo</label><input type="text" id="f-nome" placeholder="Nome do paciente"></div>
+        <div class="form-group"><label>CPF</label><input type="text" id="f-cpf" placeholder="000.000.000-00" maxlength="14"></div>
+        <div class="form-group"><label>Telefone</label><input type="text" id="f-tel" placeholder="(00) 00000-0000" maxlength="15"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sec-title">📍 Endereço</div>
+      <div class="form-grid g3">
+        <div class="form-group">
+          <label>CEP</label>
+          <div class="cep-row">
+            <input type="text" id="f-cep" placeholder="00000-000" maxlength="9" oninput="onCEPInput(this)">
+            <button class="btn-cep" id="btn-cep" onclick="buscarCEP()">Buscar</button>
+          </div>
+        </div>
+        <div class="form-group span2"><label>Rua / Avenida</label><input type="text" id="f-rua" placeholder="Nome da rua"></div>
+        <div class="form-group"><label>Número</label><input type="text" id="f-num" placeholder="Ex: 275"></div>
+        <div class="form-group span2"><label>Complemento</label><input type="text" id="f-comp" placeholder="Apto, bloco, casa..."></div>
+        <div class="form-group"><label>Bairro</label><input type="text" id="f-bairro" placeholder="Bairro"></div>
+        <div class="form-group"><label>Cidade</label><input type="text" id="f-cidade" placeholder="Cidade"></div>
+        <div class="form-group"><label>UF</label><input type="text" id="f-uf" placeholder="SP" maxlength="2"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sec-title">💊 Kit de tratamento</div>
+      <div class="kit-cards">
+        <div class="kgroup-label">Preço normal</div>
+        <label class="kit-card sel-normal" onclick="selKit(this,'3m_normal')"><input type="radio" name="kit" value="3m_normal" checked>
+          <span class="kbadge kb-n">Normal</span>
+          <div class="kit-name">Protocolo Inicial – 3 meses</div><div class="kit-detail">📦 3 frascos</div>
+          <div class="kit-price-n">R$ 329,00 à vista</div><div class="kit-parcel">ou 12x de R$ 34,03</div>
+        </label>
+        <label class="kit-card" onclick="selKit(this,'5m_normal')"><input type="radio" name="kit" value="5m_normal">
+          <span class="kbadge kb-n">Normal</span>
+          <div class="kit-name">Protocolo Médio – 5 meses</div><div class="kit-detail">📦 5 frascos</div>
+          <div class="kit-price-n">R$ 379,00 à vista</div><div class="kit-parcel">ou 12x de R$ 39,20</div>
+        </label>
+        <label class="kit-card" onclick="selKit(this,'7m_normal')"><input type="radio" name="kit" value="7m_normal">
+          <span class="kbadge kb-n">Normal</span>
+          <div class="kit-name">⭐ Protocolo Completo – 7 meses</div><div class="kit-detail">📦 7 frascos</div>
+          <div class="kit-price-n">R$ 449,00 à vista</div><div class="kit-parcel">ou 12x de R$ 46,44</div>
+        </label>
+        <label class="kit-card" onclick="selKit(this,'ultra_normal')"><input type="radio" name="kit" value="ultra_normal">
+          <span class="kbadge kb-n">Normal</span>
+          <div class="kit-name">🔥 Protocolo Ultra – 10 meses</div><div class="kit-detail">📦 10 frascos</div>
+          <div class="kit-price-n">R$ 539,00 à vista</div><div class="kit-parcel">ou 12x de R$ 55,75</div>
+        </label>
+        <div class="kgroup-label kgroup-sep">Com desconto</div>
+        <label class="kit-card" onclick="selKit(this,'3m_desc')"><input type="radio" name="kit" value="3m_desc">
+          <span class="kbadge kb-d">Desconto</span>
+          <div class="kit-name">Protocolo Inicial – 3 meses</div><div class="kit-detail">📦 3 frascos</div>
+          <div class="kit-price-d">R$ 309,02 à vista</div><div class="kit-parcel">ou 12x de R$ 31,96</div>
+        </label>
+        <label class="kit-card" onclick="selKit(this,'5m_desc')"><input type="radio" name="kit" value="5m_desc">
+          <span class="kbadge kb-d">Desconto</span>
+          <div class="kit-name">Protocolo Médio – 5 meses</div><div class="kit-detail">📦 5 frascos</div>
+          <div class="kit-price-d">R$ 359,00 à vista</div><div class="kit-parcel">ou 12x de R$ 37,13</div>
+        </label>
+        <label class="kit-card" onclick="selKit(this,'7m_desc')"><input type="radio" name="kit" value="7m_desc">
+          <span class="kbadge kb-d">Desconto</span>
+          <div class="kit-name">⭐ Protocolo Completo – 7 meses</div><div class="kit-detail">📦 7 frascos</div>
+          <div class="kit-price-d">R$ 429,00 à vista</div><div class="kit-parcel">ou 12x de R$ 44,37</div>
+        </label>
+        <label class="kit-card" onclick="selKit(this,'ultra_desc')"><input type="radio" name="kit" value="ultra_desc">
+          <span class="kbadge kb-d">Desconto</span>
+          <div class="kit-name">🔥 Protocolo Ultra – 10 meses</div><div class="kit-detail">📦 10 frascos</div>
+          <div class="kit-price-d">R$ 519,00 à vista</div><div class="kit-parcel">ou 12x de R$ 53,68</div>
+        </label>
+      </div>
+      <div class="pag-section">
+        <label class="pag-label">Forma de pagamento</label>
+        <div class="pag-opts">
+          <div class="pag-btn sel" onclick="selPag(this,'avista')">À vista</div>
+          <div class="pag-btn" onclick="selPag(this,'parcelado')">Parcelado (12x)</div>
+          <div class="pag-btn" onclick="selPag(this,'ambos')">Ambas as opções</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sec-title">📝 Informações adicionais</div>
+      <div class="form-group">
+        <label>Observações</label>
+        <textarea id="f-info" placeholder="Escreva qualquer informação sobre o pedido..."></textarea>
+      </div>
+      <div class="form-group status-group">
+        <label>Status</label>
+        <select id="f-status">
+          <option value="agendar">Agendar</option>
+          <option value="agendado">Agendado</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn-submit" onclick="salvar()">💾 Salvar pedido</button>
+  </div>
+
+  <!-- LISTA -->
+  <div id="sec-lista" class="section">
+    <div class="stats">
+      <div class="stat"><div class="stat-num" id="st-total">0</div><div class="stat-label">Total</div></div>
+      <div class="stat"><div class="stat-num" id="st-ag">0</div><div class="stat-label">A agendar</div></div>
+      <div class="stat"><div class="stat-num" id="st-ok">0</div><div class="stat-label">Agendados</div></div>
+      <div class="stat"><div class="stat-num" id="st-conf">0</div><div class="stat-label">Termos confirmados</div></div>
+    </div>
+    <div class="filter-bar">
+      <input type="text" id="fil-nome" placeholder="🔍 Buscar nome ou CPF..." oninput="render()">
+      <select id="fil-status" onchange="render()">
+        <option value="">Todos os status</option>
+        <option value="agendar">Agendar</option>
+        <option value="agendado">Agendado</option>
+      </select>
+      <select id="fil-kit" onchange="render()">
+        <option value="">Todos os kits</option>
+        <option value="3m_normal">3 meses – Normal</option>
+        <option value="5m_normal">5 meses – Normal</option>
+        <option value="7m_normal">7 meses – Normal</option>
+        <option value="ultra_normal">Ultra – Normal</option>
+        <option value="3m_desc">3 meses – Desconto</option>
+        <option value="5m_desc">5 meses – Desconto</option>
+        <option value="7m_desc">7 meses – Desconto</option>
+        <option value="ultra_desc">Ultra – Desconto</option>
+      </select>
+      <select id="fil-termo" onchange="render()">
+        <option value="">Todos os termos</option>
+        <option value="confirmado">Confirmado</option>
+        <option value="pendente">Pendente</option>
+      </select>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th>Data</th><th>Nome</th><th>Telefone</th><th>CPF</th>
+          <th>Kit</th><th>Pagamento</th><th>Endereço</th>
+          <th>Status</th><th>Termo</th><th>Informações</th><th></th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div id="empty-msg" class="empty">📭 Nenhum pedido encontrado</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal confirmação de exclusão -->
+<div class="overlay" id="conf-overlay">
+  <div class="modal">
+    <h3>Excluir pedido</h3>
+    <p>Tem certeza? Esta ação não pode ser desfeita.</p>
+    <div class="modal-btns">
+      <button class="mbtn-cancel" onclick="closeConf()">Cancelar</button>
+      <button class="mbtn-del" onclick="confirmDel()">Excluir</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
