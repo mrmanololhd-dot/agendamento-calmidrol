@@ -119,6 +119,7 @@ function salvar() {
     nome,
     cpf:     document.getElementById('f-cpf').value,
     tel:     document.getElementById('f-tel').value,
+    email:   document.getElementById('f-email').value,
     cep:     document.getElementById('f-cep').value,
     rua:     document.getElementById('f-rua').value,
     num:     document.getElementById('f-num').value,
@@ -142,7 +143,7 @@ function salvar() {
 }
 
 function clearForm() {
-  ['f-data','f-nome','f-cpf','f-tel','f-cep','f-rua','f-num','f-comp','f-bairro','f-cidade','f-uf','f-info']
+  ['f-data','f-nome','f-cpf','f-tel','f-email','f-cep','f-rua','f-num','f-comp','f-bairro','f-cidade','f-uf','f-info']
     .forEach(id => document.getElementById(id).value = '');
   document.getElementById('f-status').value = 'agendar';
   document.querySelectorAll('.kit-card').forEach((k, i) => {
@@ -196,6 +197,7 @@ function render() {
 <td><input class="td-edit" value="${esc(p.data)}" style="min-width:100px" onchange="upd(${p.id},'data',this.value)"></td>
 <td><input class="td-edit" value="${esc(p.nome)}" style="min-width:130px" onchange="upd(${p.id},'nome',this.value)"></td>
 <td><input class="td-edit" value="${esc(p.tel)}" style="min-width:120px" onchange="upd(${p.id},'tel',this.value)"></td>
+<td><input class="td-edit" value="${esc(p.email)}" style="min-width:150px" onchange="upd(${p.id},'email',this.value)"></td>
 <td><input class="td-edit" value="${esc(p.cpf)}" style="min-width:120px" onchange="upd(${p.id},'cpf',this.value)"></td>
 <td>
   <select class="kit-sel-td" onchange="upd(${p.id},'kit',this.value)">
