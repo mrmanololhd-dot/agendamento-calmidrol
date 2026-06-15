@@ -265,22 +265,36 @@ tr:hover td { background: #fafeff; }
 }
 .td-edit:focus { border-color: #ddd; background: #fff; outline: none; }
 .td-sel {
-  font-size: 12px; border: 1px solid #ddd;
-  border-radius: 6px; padding: 5px 8px;
-  background: #fff; color: #1a1a1a; cursor: pointer;
+  font-size: 13px; font-weight: 600;
+  border: 1.5px solid #185FA5;
+  border-radius: 6px; padding: 6px 10px;
+  background: #EBF4FF; color: #0C447C;
+  cursor: pointer; min-width: 110px;
 }
+.td-sel:focus { outline: none; border-color: #0C447C; }
 .kit-sel-td {
-  font-size: 12px; border: 1px solid #ddd;
-  border-radius: 6px; padding: 5px 8px;
-  background: #fff; color: #1a1a1a;
-  width: 100%; cursor: pointer;
+  font-size: 13px; font-weight: 600;
+  border: 1.5px solid #185FA5;
+  border-radius: 6px; padding: 6px 10px;
+  background: #EBF4FF; color: #0C447C;
+  width: 100%; cursor: pointer; min-width: 150px;
 }
+.td-sel:focus { outline: none; border-color: #0C447C; }
+.kit-sel-td:focus { outline: none; border-color: #0C447C; }
+
+/* Status colorido */
+.status-agendar { background: #fff3cd !important; color: #856404 !important; border-color: #f0ad00 !important; }
+.status-agendado { background: #d4edda !important; color: #155724 !important; border-color: #28a745 !important; }
 .info-ta {
-  font-size: 12px; border: 1px solid #ddd;
-  border-radius: 6px; padding: 5px 8px;
-  min-height: 40px; background: #fff; color: #1a1a1a;
-  font-family: inherit; resize: none; width: 155px;
+  font-size: 13px; font-weight: 500;
+  border: 1.5px solid #185FA5;
+  border-radius: 6px; padding: 8px 10px;
+  min-height: 70px; min-width: 200px;
+  background: #f8fbff; color: #1a1a1a;
+  font-family: inherit; resize: vertical; width: 210px;
+  line-height: 1.5;
 }
+.info-ta:focus { outline: none; border-color: #0C447C; background: #fff; box-shadow: 0 0 0 3px rgba(24,95,165,.1); }
 
 /* ===== PILLS & TERMO BTN ===== */
 .pill {

@@ -197,34 +197,27 @@ function render() {
 <td><input class="td-edit" value="${esc(p.data)}" style="min-width:100px" onchange="upd(${p.id},'data',this.value)"></td>
 <td><input class="td-edit" value="${esc(p.nome)}" style="min-width:130px" onchange="upd(${p.id},'nome',this.value)"></td>
 <td><input class="td-edit" value="${esc(p.tel)}" style="min-width:120px" onchange="upd(${p.id},'tel',this.value)"></td>
-<td><input class="td-edit" value="${esc(p.email)}" style="min-width:150px" onchange="upd(${p.id},'email',this.value)"></td>
 <td><input class="td-edit" value="${esc(p.cpf)}" style="min-width:120px" onchange="upd(${p.id},'cpf',this.value)"></td>
-<td>
+<td><input class="td-edit" value="${esc(p.email||'')}" style="min-width:150px" onchange="upd(${p.id},'email',this.value)"></td>
+<td style="min-width:140px">
   <select class="kit-sel-td" onchange="upd(${p.id},'kit',this.value)">
     <optgroup label="Normal">
-      <option value="3m_normal"    ${p.kit==='3m_normal'?'selected':''}>3 meses</option>
-      <option value="5m_normal"    ${p.kit==='5m_normal'?'selected':''}>5 meses</option>
-      <option value="7m_normal"    ${p.kit==='7m_normal'?'selected':''}>7 meses</option>
-      <option value="ultra_normal" ${p.kit==='ultra_normal'?'selected':''}>Ultra</option>
+      <option value="3m_normal"    ${p.kit==='3m_normal'?'selected':''}>3 meses – Normal</option>
+      <option value="5m_normal"    ${p.kit==='5m_normal'?'selected':''}>5 meses – Normal</option>
+      <option value="7m_normal"    ${p.kit==='7m_normal'?'selected':''}>7 meses – Normal</option>
+      <option value="ultra_normal" ${p.kit==='ultra_normal'?'selected':''}>Ultra – Normal</option>
     </optgroup>
     <optgroup label="Desconto 🏷">
-      <option value="3m_desc"    ${p.kit==='3m_desc'?'selected':''}>3 meses</option>
-      <option value="5m_desc"    ${p.kit==='5m_desc'?'selected':''}>5 meses</option>
-      <option value="7m_desc"    ${p.kit==='7m_desc'?'selected':''}>7 meses</option>
-      <option value="ultra_desc" ${p.kit==='ultra_desc'?'selected':''}>Ultra</option>
+      <option value="3m_desc"    ${p.kit==='3m_desc'?'selected':''}>3 meses – Desc.</option>
+      <option value="5m_desc"    ${p.kit==='5m_desc'?'selected':''}>5 meses – Desc.</option>
+      <option value="7m_desc"    ${p.kit==='7m_desc'?'selected':''}>7 meses – Desc.</option>
+      <option value="ultra_desc" ${p.kit==='ultra_desc'?'selected':''}>Ultra – Desc.</option>
     </optgroup>
-  </select>
-</td>
-<td>
-  <select class="td-sel" onchange="upd(${p.id},'pagamento',this.value)">
-    <option value="avista"    ${p.pagamento==='avista'?'selected':''}>À vista</option>
-    <option value="parcelado" ${p.pagamento==='parcelado'?'selected':''}>12x</option>
-    <option value="ambos"     ${p.pagamento==='ambos'?'selected':''}>Ambos</option>
   </select>
 </td>
 <td style="font-size:11px;max-width:170px;min-width:130px;word-break:break-word;line-height:1.6">${esc(end) || '—'}</td>
 <td>
-  <select class="td-sel" onchange="upd(${p.id},'status',this.value)">
+  <select class="td-sel ${p.status==='agendado'?'status-agendado':'status-agendar'}" onchange="updStatus(${p.id},this)">
     <option value="agendar"  ${p.status==='agendar'?'selected':''}>Agendar</option>
     <option value="agendado" ${p.status==='agendado'?'selected':''}>Agendado</option>
   </select>
@@ -233,7 +226,7 @@ function render() {
   <button class="pill ${pillClass}" onclick="toggleTermo(${p.id})">${pillLabel}</button>
   <button class="term-btn" onclick="copyTermo(${p.id})">📋 Copiar termo</button>
 </td>
-<td style="min-width:165px">
+<td style="min-width:220px">
   <textarea class="info-ta" onchange="upd(${p.id},'info',this.value)">${esc(p.info || '')}</textarea>
 </td>
 <td><button class="btn-del" onclick="askDel(${p.id})" title="Excluir pedido">🗑</button></td>
@@ -245,6 +238,12 @@ function render() {
 function upd(id, field, val) {
   const p = pedidos.find(x => x.id === id);
   if (p) { p[field] = val; saveData(); stats(); }
+}
+
+function updStatus(id, sel) {
+  const val = sel.value;
+  sel.className = 'td-sel ' + (val === 'agendado' ? 'status-agendado' : 'status-agendar');
+  upd(id, 'status', val);
 }
 
 // ===== TOGGLE TERMO =====
