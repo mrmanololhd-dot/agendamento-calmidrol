@@ -260,20 +260,23 @@ function toggleTermo(id) {
 // ===== GERAR TERMO =====
 function gerarTermo(p) {
   const k = KITS[p.kit] || { nome: '—', frascos: '—', avista: '—', parc: '—' };
-  const hoje = p.data ? fmtData(p.data) : new Date().toLocaleDateString('pt-BR');
 
   let precoLinha = '';
-  if (p.pagamento === 'avista')     precoLinha = k.avista + ' à vista';
+  if (p.pagamento === 'avista')         precoLinha = k.avista + ' à vista';
   else if (p.pagamento === 'parcelado') precoLinha = 'ou ' + k.parc;
-  else                               precoLinha = k.avista + ' à vista\nou ' + k.parc;
+  else                                  precoLinha = k.avista + ' à vista ou ' + k.parc;
 
   const rua  = [p.rua, p.num].filter(Boolean).join(', ');
   const comp = p.comp ? '\n▸ COMPLEMENTO – ' + p.comp : '';
   const cidade = [p.cidade, p.uf].filter(Boolean).join(' - ');
 
-  return `${k.nome}
-${k.frascos} frascos
-${precoLinha}
+  return `📦 CONFIRMAÇÃO DE PEDIDO — CALMIDROL
+
+Olá, ${p.nome || '—'}! 😊
+Seu pedido foi registrado com sucesso e já está sendo separado pela nossa equipe.
+👤 DADOS DO CLIENTE
+▪ Nome: ${p.nome || '—'}
+▪ CPF: ${p.cpf || '—'}
 ━━━━━━━━━━━━━━
 ENDEREÇO DE ENTREGA
 ▸ RUA – ${rua || '—'}${comp}
@@ -281,18 +284,24 @@ ENDEREÇO DE ENTREGA
 ▸ CIDADE: ${cidade || '—'}
 ▸ CEP: ${p.cep || '—'}
 ━━━━━━━━━━━━━━
-✔️ Pedido realizado voluntariamente
-✔️ Informações fornecidas são verdadeiras
-✔️ Prazo p/ pagamento: 1 dia após receber
-✔️ Não parcelamos no boleto e pix
+📦 SEU PEDIDO
+▪ Produto: ${k.nome} - ${k.frascos} frascos
+▪ Modalidade: PAGAMENTO NA ENTREGA
+▪ Preço: ${precoLinha}
 ━━━━━━━━━━━━━━
-⚠️ COMPROMISSO DE PAGAMENTO
-Ao confirmar este pedido, o cliente declara ciência de que o pagamento deverá ser realizado dentro do prazo estipulado após o recebimento do produto. O não pagamento no prazo acordado resultará em acréscimos judiciais, encaminhamento aos órgãos de proteção ao crédito e negativação do CPF ${p.cpf || '—'} junto ao SPC/Serasa.
-Nome: ${p.nome || '—'}
-Data: ${hoje} Envio
-Prazo de entrega de 5 a 10 dias uteis
+💳 FORMAS DE PAGAMENTO
+✔ PIX
+✔ Cartão de Crédito em até 12x
+✔ Boleto Bancário à Vista
+❌❌❌ NÃO TRABALHAMOS COM BOLETO PARCELADO! ❌❌❌
+⚠️ IMPORTANTE
+🚨🚨🚨 O PAGAMENTO DEVERÁ SER REALIZADO NO MESMO DIA DA ENTREGA DO PEDIDO, ASSIM QUE O PRODUTO FOR RECEBIDO EM SEU ENDEREÇO. 🚨🚨🚨
+O não pagamento poderá resultar na adoção das medidas de cobrança cabíveis, incluindo comunicação aos órgãos de proteção ao crédito, conforme permitido pela legislação vigente.
 ━━━━━━━━━━━━━━
-Digite "SIM" para confirmar seu pedido! Aguardo sua confirmação.`;
+✅ Ao responder "SIM", você declara que os dados acima estão corretos e que concorda com todas as condições deste pedido.
+⚠️ CPF vinculado ao pedido: ${p.cpf || '—'}
+━━━━━━━━━━━━━━
+📲 Digite "SIM" para confirmar seu pedido.`;
 }
 
 function copyTermo(id) {
